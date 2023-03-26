@@ -1,24 +1,19 @@
 {% extends 'templates\base\base.html' %}
-
-
-
 {% block title %}
-To-do
+Log out
 {% endblock title %}
-
-
-{% block todo_active_nav %}
-active
-{% endblock todo_active_nav %}
-
 
 {% block nav_list %}
 <li class="nav-item">
-    <a class="nav-link" href="{% url 'logout' %}">Log out</a>
+    <a class="nav-link active" href="{% url 'login' %}">Log In</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link disabled" href="{% url 'signup' %}">Sign up</a>
 </li>
 {% endblock nav_list %}
 
  
+
 {% block content %}
-This is todo Page
+This is Logout Page
 {% endblock content %}

@@ -20,5 +20,7 @@ from access.views import *
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('access/', views.access, name = 'access'),
+    path('logout/', views.logout, name = 'logout'),
+    path('login/', views.login, name = 'login'),
+    path('signup/', views.signup, name = 'signup'),
 ]

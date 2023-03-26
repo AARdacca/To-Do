@@ -5,5 +5,11 @@ from django.contrib.auth.forms import UserCreationForm
 
 from.models import*
 
-def access(request):
-    return render(request,'access/access.html') 
+def login(request):
+    return render(request,'access/login.html')
+
+def logout(request):
+    return render(request,'access/logout.html')
+
+def signup(request):
+    return render(request,'access/signup.html')
