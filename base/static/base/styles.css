@@ -13,10 +13,10 @@
     background-image: linear-gradient(90deg,rgba(0,253,139,1.00) 0%,rgba(126,255,196,1.00) 47.67%,rgba(0,253,139,1.00) 100%);
 }
 
-#navbarSupportedContent .d-flex .btn.btn-outline-success {
+/* #navbarSupportedContent .d-flex .btn.btn-outline-success {
     color: #B5FFC8;
     background-color: #9100FF;
-}
+} */
 
 #navbarSupportedContent .navbar-nav.me-auto.mb-2.mb-lg-0 .nav-item {
     color: #12004F;
