@@ -7,12 +7,16 @@ Home
 {% endblock title %}
 
 
-{% block home_active_nav %}
-active
-{% endblock home_active_nav %}
-
-
 {% block nav_list %}
+<li class="nav-item">
+    <a class="nav-link" aria-current="page" href="{% url 'home' %}"><u>Home</u></a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" aria-current="page" href="{% url 'todo' %}">To-Do</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" aria-current="page" href="{% url 'about' %}">About</a>
+</li>
 <li class="nav-item">
     <a class="nav-link" href="{% url 'logout' %}">Log out</a>
 </li>
@@ -21,4 +25,19 @@ active
  
 {% block content %}
 This is Home Page
+
+{% if user == 'User' %}
+
+<h1>Hello!</h1>
+
+{% elif user == 'UserTemp' %}
+
+<h1>Please enjoy!</h1>
+
+{% else %}
+
+<h1>Please register!</h1>
+
+{% endif %}
+
 {% endblock content %}

@@ -3,8 +3,13 @@
 
 
 {% block title %}
-About
+To-do
 {% endblock title %}
+
+
+{% block todo_active_nav %}
+active
+{% endblock todo_active_nav %}
 
 
 {% block nav_list %}
@@ -15,7 +20,7 @@ About
     <a class="nav-link" aria-current="page" href="{% url 'todo' %}">To-Do</a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" aria-current="page" href="{% url 'about' %}"><u>About</u></a>
+    <a class="nav-link" aria-current="page" href="{% url 'about' %}">About</a>
 </li>
 <li class="nav-item">
     <a class="nav-link" href="{% url 'logout' %}">Log out</a>
@@ -24,5 +29,6 @@ About
 
  
 {% block content %}
-This is About Page
+<h1>Description:</h1><br>
+{{todo.description}}
 {% endblock content %}

@@ -23,4 +23,5 @@ from todo.views import *
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('todo/', views.todo, name = 'todo'),
+    path('todo/<str:pk>', views.todo_view, name = 'todo_view'), #name is unused
 ]
