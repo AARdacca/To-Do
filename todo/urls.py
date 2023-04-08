@@ -20,8 +20,13 @@ from todo import views
 
 from todo.views import *
 
+app_name = "tasks"
+
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('todo/', views.todo, name = 'todo'),
-    path('todo/<str:pk>', views.todo_view, name = 'todo_view'), #name is unused
+    path('create/', views.create_task, name='create'),
+    path('<int:task_id>/', views.detail, name='detail'),
+    path('edit/', views.edit, name='edit'),
+    path('delete/<int:task_id>/', views.delete, name='delete'),
+    path('comment/<int:task_id>', views.post_comment, name='comment')
 ]

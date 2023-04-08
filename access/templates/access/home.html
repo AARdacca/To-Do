@@ -1,0 +1,124 @@
+{% extends 'access\base_layout.html' %}
+
+{% block content %}
+
+    {% include "todo\navbar.html" %}
+
+    <div class="container" style="margin-top:20px;">
+
+        {% if messages %}
+            <div class="columns" style="margin-top: 20px;">
+                <div class="column"></div>
+                <div class="column is-8">
+                    <article class="message is-danger">
+                        <div class="message-body">
+                            <ul class="messages">
+                                {% for message in messages %}
+                                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+                <div class="column"></div>
+            </div>
+        {% endif %}
+
+
+        <div class="columns">
+            <div class="column is-7">
+                <h1 class="title is-4">Tasks
+                    <a href="{% url 'tasks:create' %}" style="margin-left:5px;">
+                        <i class="far fa-plus-square fa-sm"></i>
+                    </a>
+                </h1>
+                <hr>
+
+                {% if tasks|length == 0 %}
+                    <p class="subtitle is-5 has-text-centered">No tasks found.</p>
+                {% else %}
+                    <table class="table is-striped  is-hoverable is-fullwidth">
+                        <thead>
+                        <tr>
+                            <th>Sr. No</th>
+                            <th>Task</th>
+                            <th>Status</th>
+                            <th>Team</th>
+                            <th>Assignee</th>
+                            <th>Created by</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for task in tasks %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>
+                                    <a href="{% url 'tasks:detail' task.id %}"
+                                       style="color:#363636;">{{ task.title | truncatechars:15 }}</a>
+                                </td>
+                                <td>{{ task.status }}</td>
+                                <td>{{ task.team }}</td>
+                                <td>
+                                    {% for assignee in task.assigned_to.all %}
+                                        {% if not forloop.first %}, {% endif %}
+                                        {{ assignee | title }}
+                                    {% endfor %}
+                                </td>
+                                <td>{{ task.created_by }}</td>
+                                <td><a href="{% url 'tasks:detail' task.id %}"
+                                       class="button is-small is-outlined is-info">View</a></td>
+                                <td>
+                                    {% if task.created_by == request.user %}
+                                        <a href="{% url 'tasks:delete' task.id %}"
+                                           class="button is-small is-outlined is-danger">
+                                            Delete
+                                        </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+
+            </div>
+            <div class="column"></div>
+            <div class="column is-4">
+                <h1 class="title is-4">Your Teams <a href="{% url 'access:create_team' %}" style="margin-left:5px;"><i
+                        class="far fa-plus-square fa-sm"></i></a></h1>
+                <hr>
+
+                {% if teams|length == 0 %}
+                    <p class="subtitle is-5 has-text-centered">No teams found.</p>
+                {% else %}
+                    <table class="table is-striped  is-hoverable is-fullwidth">
+                        <thead>
+                        <tr>
+                            <th>Team</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for team in teams %}
+                            <tr>
+                                <td>
+                                    {{ team.team_name }}
+                                </td>
+                                <td>
+                                    <a
+                                            href="{% url 'access:team_detail' team.id %}"
+                                            class="button is-small is-outlined is-info">
+                                        View
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

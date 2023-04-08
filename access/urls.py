@@ -18,9 +18,15 @@ from django.urls import path
 from access import views
 from access.views import *
 
+app_name = "access"
+
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('logout/', views.logout, name = 'logout'),
-    path('login/', views.login, name = 'login'),
-    path('signup/', views.signup, name = 'signup'),
+    path('register/', views.register_view, name="register"),
+    path('login/', views.login_view, name="login"),
+    path('home/', views.home_view, name="home"),
+    path('logout/', views.logout_view, name="logout"),
+    path('create_team/', views.create_team, name="create_team"),
+    path('team/<int:team_id>/', views.team_detail, name="team_detail"),
+    path('team/add_member/', views.add_team_member, name="add_team_member")
 ]

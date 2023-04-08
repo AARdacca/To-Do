@@ -1,58 +1,168 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.forms import inlineformset_factory
-from django.contrib.auth.forms import UserCreationForm
+# from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.shortcuts import redirect, render
+from django.contrib import messages
 
-from.models import*
+from .models import Task, Comment
+from todo.models import Team
 
-project_sample_list = [
-    # For short_description String Slicing is needed
-    # b = "Hello, World!"
-    # print(b[0:9])
-    {
-        'id': '1',
-        'title': 'Bazar Today',
-        'short_description': 'Needed groceries...',
-        'description': 'Needed groceries from foodstore online'
-    },
-    {   
-        'id': '2',
-        'title': 'Project update',
-        'short_description': 'fix some CSS...',
-        'description': 'fix some CSS issues according to some documentation',
-    },
-    {   
-        'id': '3',
-        'title': 'Setting up PC',
-        'short_description': 'install VS Code...',
-        'description': 'install VS Code and Python',
-    },
-    {   
-        'id': '4',
-        'title': 'Setting up TV',
-        'short_description': 'Manual Search and...',
-        'description': 'Manual Search and Auto Search needs to be conducted',
-    },
-]
 
-def todo(request):
-    dict = {'todo': project_sample_list}
-    return render(request,'todo/todo.html', context=dict)
+@login_required(login_url='access:login')
+def create_task(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        status = request.POST.get('status')
+        assignees = request.POST.getlist('assignee')
 
-def todo_view(request, pk):
-    todo_obj = None
-    for i in project_sample_list:
-        if i['id'] == pk:
-            todo_obj=i
-    # Object found
-    dict = {'todo': todo_obj}
-    return render(request,'todo/todo_view.html', context=dict)
+        task = Task(title=title, description=description,
+                    status=status, created_by=request.user)
 
-# def todo_search(request, search_key):
-#     todo_obj = []
-#     for i in project_sample_list:
-#         if i['id'] == search_key:
-#             todo_obj.append(i)
-#     # Object found
-#     dict = {'todo': todo_obj}
-#     return render(request,'todo/todo_view.html', context=dict)
+        team_id = request.POST.get('team_id', None)
+
+        if team_id is not None:
+            try:
+                team = Team.objects.get(pk=team_id)
+                task.team = team
+            except Team.DoesNotExist:
+                return redirect('access:home')
+
+        task.save()
+
+        if len(assignees) == 0:
+            task.assigned_to.add(request.user)
+
+        for assignee in assignees:
+            task.assigned_to.add(User.objects.get(username=assignee))
+
+        task.save()
+
+        '''
+        If request from team page, then redirect back to team
+        '''
+        if team_id is not None:
+            return redirect('access:team_detail', team_id=team_id)
+
+        return redirect('access:home')
+
+    users = User.objects.all()
+
+    return render(request, 'todo/create.html', {'users': users})
+
+
+@login_required(login_url='access:login')
+def detail(request, task_id):
+    try:
+        task = Task.objects.get(pk=task_id)
+    except Task.DoesNotExist:
+        return redirect('access:home')
+
+    team = task.team
+
+    if team is None:
+        ''' Check whether user can view details of another task '''
+        if request.user != task.created_by and request.user not in task.assigned_to.all():
+            messages.error(request, "You can't view this task")
+            return redirect('access:home')
+    else:
+        if request.user not in team.members.all():
+            messages.error(request, "You can't view this task")
+            return redirect('access:home')
+
+    users = User.objects.all()
+
+    comments = Comment.objects.filter(task=task)
+
+    statuses = ['Planned', 'Ongoing', 'Done']
+
+    return render(request, "todo/detail.html", {
+        "id": task_id, "task": task,
+        "users": users, "statuses": statuses,
+        "comments": comments
+    })
+
+
+@login_required(login_url='access:login')
+def edit(request):
+    if request.method == 'POST':
+        try:
+            task = Task.objects.get(pk=request.POST.get("task_id"))
+        except Task.DoesNotExist:
+            messages.error(request, "Task not found")
+            return redirect('access:home')
+
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        status = request.POST.get('status')
+        assignees = request.POST.getlist('assignee')
+
+        task.title = title
+        task.description = description
+        task.status = status
+
+        for assignee in assignees:
+            task.assigned_to.add(User.objects.get(username=assignee))
+
+        task.save()
+
+        return redirect('access:home')
+
+    return redirect('access:home')
+
+
+@login_required(login_url='access:login')
+def delete(request, task_id):
+    try:
+        task = Task.objects.get(pk=task_id)
+    except Task.DoesNotExist:
+        messages.error(request, "Task doesn't exist")
+        return redirect('access:home')
+
+    if task:
+        if request.user == task.created_by:
+            task.delete()
+        else:
+            messages.error(request, "Only task creator can delete task.")
+    else:
+        messages.error(request, "Task doesn't exist")
+
+    return redirect('access:home')
+
+
+@login_required()
+def post_comment(request, task_id):
+    try:
+        task = Task.objects.get(pk=task_id)
+    except Task.DoesNotExist:
+        messages.error(request, "Task doesn't exist")
+        return redirect('access:home')
+
+    if request.method == 'POST':
+        body = request.POST.get("comment")
+        team_id = request.POST.get("team_id", None)
+
+        flag = False
+
+        # If team is none, check if user created/assigned task
+        if team_id is None:
+            if request.user == task.created_by or request.user in task.assigned_to.all():
+                flag = True
+            else:
+                messages.error(request, "You can't comment on this task")
+        else:
+            team = Team.objects.get(pk=team_id)
+            # Check if user is present in team
+            if request.user in team.members.all():
+                flag = True
+            else:
+                messages.error(
+                    request, "Only team members can comment on this task")
+
+        if flag:
+            comment = Comment(body=body, author=request.user, task=task)
+            comment.save()
+
+        # print(body)
+
+    return redirect('tasks:detail', task_id=task_id)

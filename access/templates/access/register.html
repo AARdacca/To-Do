@@ -5,20 +5,25 @@
         <div class="columns">
             <div class="column"></div>
             <div class="column">
-                <h1 align="center" class="title">Login</h1>
+                <h1 align="center" class="title">Register</h1>
                 <hr/>
                 <br/>
 
-                <form action="{% url 'access:login' %}" method="post">
+                <form action="{% url 'access:register' %}" method="post">
                     {% csrf_token %}
 
-                    {% if form.non_field_errors %}
+                    {% if form.username.errors or form.password1.errors or form.password2.errors %}
                         <article class="message is-danger">
-                            <div class="message-body">{{ form.non_field_errors }}</div>
+                            <div class="message-body">
+                                {% for field in form.visible_fields %}
+                                    {{ field.errors }}
+                                {% endfor %}
+                            </div>
                         </article>
                     {% endif %}
 
-                    <!-- USERNAME FIELD start -->
+
+                    <!-- EMAIL FIELD start -->
                     <div class="field">
                         <label for="username" class="label">Username</label>
                         <div class="control has-icons-left">
@@ -35,23 +40,40 @@
                         </span>
                         </div>
                     </div>
-                    <!-- USERNAME FIELD end -->
+                    <!-- EMAIL FIELD end -->
 
                     <!-- PASSWORD FIELD start -->
                     <div class="field">
-                        <label for="password" class="label">Password</label>
+                        <label for="password1" class="label">Password</label>
                         <div class="control has-icons-left">
                             <input
                                     class="input"
                                     type="password"
-                                    name="password"
-                                    id="password"
+                                    name="password1"
+                                    id="password1"
                                     required
                             />
                             <span class="icon is-left"> <i class="fas fa-lock"></i> </span>
                         </div>
                     </div>
                     <!-- PASSWORD FIELD end -->
+
+                    <!-- PASSWORD FIELD start -->
+                    <div class="field">
+                        <label for="password2" class="label">Confirm Password</label>
+                        <div class="control has-icons-left">
+                            <input
+                                    class="input"
+                                    type="password"
+                                    name="password2"
+                                    id="password2"
+                                    required
+                            />
+                            <span class="icon is-left"> <i class="fas fa-lock"></i> </span>
+                        </div>
+                    </div>
+                    <!-- PASSWORD FIELD end -->
+
 
                     <div
                             class="field"
@@ -61,13 +83,13 @@
                             <input
                                     type="submit"
                                     class="button is-primary is-outlined"
-                                    value="Login"
+                                    value="Register"
                             />
                         </p>
                     </div>
 
                     <h3 class="subtitle is-6 has-text-centered" style="margin-top: 30px;">
-                        <strong>New User ? <a href="{% url 'access:register' %}">Register here</a></strong>
+                        <strong>Already a user ? <a href="{% url 'access:login' %}">Login here</a></strong>
                     </h3>
 
                     {% if request.GET.next %}
