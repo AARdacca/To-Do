@@ -1,0 +1,40 @@
+<tbody>
+    {% for task in tasks %}
+        {% if task.complete_archive == 'True' %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>
+                <a href="{% url 'tasks:detail' task.id %}"
+                   style="color:#363636;">{{ task.title | truncatechars:15 }}</a>
+            </td>
+            <td>{{ task.status }}</td>
+            <td>{{ task.team }}</td>
+            <td>
+                {% for assignee in task.assigned_to.all %}
+                    {% if not forloop.first %}, {% endif %}
+                    {{ assignee | title }}
+                {% endfor %}
+            </td>
+            <td>{{ task.created_by }}</td>
+            <td><a href="{% url 'tasks:detail' task.id %}"
+                   class="button is-small is-outlined is-info">View</a></td>
+            <td>
+                {% if task.created_by == request.user %}
+                    <a href="{% url 'tasks:delete' task.id %}"
+                       class="button is-small is-outlined is-danger">
+                        Delete
+                    </a>
+                {% endif %}
+            </td>
+            <td>
+                {% if task.created_by == request.user %}
+                    <a href="{% url 'tasks:not_complete_archive' task.id %}"
+                       class="button is-small is-outlined is-warning">
+                        UnArchive
+                    </a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+    </tbody>

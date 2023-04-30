@@ -13,6 +13,11 @@ class Task(models.Model):
         ('Done', 'Done')
     )
 
+    BOOLEAN_ASSIST = (
+        ('False', 'False'),
+        ('True', 'True')
+    )
+
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=300)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
@@ -24,6 +29,7 @@ class Task(models.Model):
     #     User, blank=True, null=True, related_name='task_assigned_to', on_delete=models.CASCADE)
     assigned_to = models.ManyToManyField(User, related_name='task_assigned_to')
     team = models.ForeignKey(Team, null=True, on_delete=models.CASCADE)
+    complete_archive = models.CharField(max_length=8, choices=BOOLEAN_ASSIST, default='False')
 
     def __str__(self):
         return self.title

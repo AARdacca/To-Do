@@ -25,6 +25,7 @@ urlpatterns = [
     path('register/', views.register_view, name="register"),
     path('login/', views.login_view, name="login"),
     path('home/', views.home_view, name="home"),
+    path('complete_archive_all/', views.complete_archive_all, name="complete_archive_all"),
     path('logout/', views.logout_view, name="logout"),
     path('create_team/', views.create_team, name="create_team"),
     path('team/<int:team_id>/', views.team_detail, name="team_detail"),

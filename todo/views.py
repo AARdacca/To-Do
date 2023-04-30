@@ -166,3 +166,45 @@ def post_comment(request, task_id):
         # print(body)
 
     return redirect('tasks:detail', task_id=task_id)
+
+
+# ----------------------------------------- After 2nd Update -------------------------------------------------------
+
+@login_required(login_url='access:login')
+def complete_archive(request, task_id):
+    try:
+        task = Task.objects.get(pk=task_id)
+    except Task.DoesNotExist:
+        messages.error(request, "Task doesn't exist")
+        return redirect('access:home')
+
+    if task:
+        if request.user == task.created_by:
+            task.complete_archive = 'True'
+            task.save()
+        else:
+            messages.error(request, "Only task creator can delete task.")
+    else:
+        messages.error(request, "Task doesn't exist")
+
+    return redirect('access:home')
+
+
+@login_required(login_url='access:login')
+def not_complete_archive(request, task_id):
+    try:
+        task = Task.objects.get(pk=task_id)
+    except Task.DoesNotExist:
+        messages.error(request, "Task doesn't exist")
+        return redirect('access:home')
+
+    if task:
+        if request.user == task.created_by:
+            task.complete_archive = 'False'
+            task.save()
+        else:
+            messages.error(request, "Only task creator can delete task.")
+    else:
+        messages.error(request, "Task doesn't exist")
+
+    return redirect('access:complete_archive_all')

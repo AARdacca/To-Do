@@ -1,4 +1,19 @@
+{% load  static %}
 <nav id="navbar" class="navbar is-dark">
+
+    <div class="navbar-brand">
+        <a href="{% url 'access:home' %}" class="navbar-item"><img src="{% static 'logo/logo.png' %}"></a>
+        <div
+                id="navbarBurger"
+                class="navbar-burger burger"
+                data-target="burgerMenu"
+        >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </div>
+    </div>
+
     <div class="navbar-brand">
         <a href="{% url 'access:home' %}" class="navbar-item">{{ request.user }}</a>
         <div
@@ -11,6 +26,20 @@
             <span aria-hidden="true"></span>
         </div>
     </div>
+
+    <div class="navbar-item">
+        <a href="{% url 'access:complete_archive_all' %}" class="navbar-item">Archive</a>
+        <div
+                id="navbarBurger"
+                class="navbar-burger burger"
+                data-target="burgerMenu"
+        >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </div>
+    </div>
+
     <div class="navbar-menu" id="burgerMenu">
         <div class="navbar-end">
             <a href="{% url 'access:logout' %}" class="navbar-item">
@@ -18,6 +47,7 @@
             </a>
         </div>
     </div>
+    
 </nav>
 
 <script>

@@ -137,3 +137,17 @@ def add_team_member(request):
 
     return redirect('access:team_detail',
                     team_id=request.POST.get('team_id'))
+
+
+# ----------------------------------------- After 2nd Update -------------------------------------------------------
+
+@login_required(login_url='access:login')
+def complete_archive_all(request):
+    # Get teams of user
+    teams = request.user.team_set.all()
+
+    # Get tasks assigned / created to user
+    tasks = Task.objects.filter(
+        Q(created_by=request.user) | Q(assigned_to=request.user) | Q(team__in=teams)).order_by('title').distinct()
+
+    return render(request, 'access/complete_archive.html', {'tasks': tasks, 'teams': teams})

@@ -28,5 +28,7 @@ urlpatterns = [
     path('<int:task_id>/', views.detail, name='detail'),
     path('edit/', views.edit, name='edit'),
     path('delete/<int:task_id>/', views.delete, name='delete'),
-    path('comment/<int:task_id>', views.post_comment, name='comment')
+    path('complete_archive/<int:task_id>/', views.complete_archive, name='complete_archive'),
+    path('not_complete_archive/<int:task_id>/', views.not_complete_archive, name='not_complete_archive'),
+    path('comment/<int:task_id>', views.post_comment, name='comment'),
 ]
