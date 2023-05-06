@@ -47,8 +47,8 @@
                     <label for="assignee" class="label">Assigned To</label>
                     <div class="select is-multiple is-fullwidth">
                         <select name="assignee" id="assignee" multiple>
-                            {% for user in users %}
-                                <option value="{{ user }}">{{ user | title }}</option>
+                            {% for friend in friends.members.all %}
+                                <option value="{{ friend }}">{{ friend | title }}</option>
                             {% endfor %}
                         </select>
                     </div>

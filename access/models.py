@@ -14,3 +14,16 @@ class Team(models.Model):
 
     class Meta:
         ordering = ('team_name',)
+
+
+class Friends(models.Model):
+    friends_name = models.CharField(max_length=50, null=True, unique=False)
+    members = models.ManyToManyField(User)
+    created_by = models.ForeignKey(
+        User, null=True, on_delete=models.CASCADE, related_name='friends_created_by')
+
+    def __str__(self):
+        return self.friends_name
+
+    class Meta:
+        ordering = ('friends_name',)

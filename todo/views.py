@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.contrib import messages
 
-from .models import Task, Comment
-from todo.models import Team
+from .models import Task, Comment, Team
+from access.models import Friends
 
 
 @login_required(login_url='access:login')
@@ -47,8 +47,11 @@ def create_task(request):
         return redirect('access:home')
 
     users = User.objects.all()
+    friends = Friends.objects.get(pk=request.user.id) # added after 2nd update
+    # members = friends.members.all() #testings # added after 2nd update
+    # print(members) #testings # added after 2nd update
 
-    return render(request, 'todo/create.html', {'users': users})
+    return render(request, 'todo/create.html', {'users': users, "friends": friends,})
 
 
 @login_required(login_url='access:login')
@@ -74,12 +77,14 @@ def detail(request, task_id):
 
     comments = Comment.objects.filter(task=task)
 
+    friends = Friends.objects.get(pk=request.user.id) # added after 2nd update
+
     statuses = ['Planned', 'Ongoing', 'Done']
 
     return render(request, "todo/detail.html", {
         "id": task_id, "task": task,
         "users": users, "statuses": statuses,
-        "comments": comments
+        "comments": comments, "friends": friends,
     })
 
 

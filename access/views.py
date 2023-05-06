@@ -7,10 +7,11 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import redirect, render
+from depiction.models import Profile
 
 from todo.models import Task
 
-from .models import Team
+from .models import Team, Friends
 
 
 def register_view(request):
@@ -24,6 +25,10 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            # After 2nd update added newly
+            create_friends(request)
+            profile = Profile(user=user)
+            profile.save() 
             return redirect('access:home')
     else:
         # Handle login route
@@ -151,3 +156,58 @@ def complete_archive_all(request):
         Q(created_by=request.user) | Q(assigned_to=request.user) | Q(team__in=teams)).order_by('title').distinct()
 
     return render(request, 'access/complete_archive.html', {'tasks': tasks, 'teams': teams})
+
+@login_required()
+def create_friends(request):
+    if request.method == "POST":
+        members_list = [] # ['Raiyan',]
+        friends_name = "My Friends"
+
+        friends = Friends.objects.create(
+            friends_name=friends_name, created_by=request.user)
+
+        for member in members_list:
+            friends.members.add(User.objects.get(username=member))
+
+        # Add creator to members
+        friends.members.add(request.user)
+
+        friends.save()
+
+@login_required(login_url='access:login')
+def friends_detail(request, friends_id):
+    try:
+        friends = Friends.objects.get(pk=friends_id)
+    except Friends.DoesNotExist:
+        messages.error(request, "Friends doesn't exist")
+        return redirect('access:home')
+
+    if request.user not in friends.members.all():
+        messages.error(
+            request, "You are not allowed to view this friends's details.")
+        return redirect('access:home')
+
+    users = User.objects.all()
+    return render(request, 'friends/friends_detail.html', {'friends': friends, 'users': users,})
+
+@login_required()
+def add_friends_member(request):
+    if request.method == 'POST':
+        friends_id = request.POST.get('friends_id', None)
+
+        if friends_id is not None:
+            try:
+                friends = Friends.objects.get(pk=friends_id)
+            except Friends.DoesNotExist:
+                return redirect('access:home')
+        else:
+            return redirect('access:home')
+
+        members = request.POST.getlist('members', None)
+
+        if members is not None:
+            for member in members:
+                friends.members.add(User.objects.get(username=member))
+
+    return redirect('access:friends_detail',
+                    friends_id=request.POST.get('friends_id'))

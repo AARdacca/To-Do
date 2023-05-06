@@ -96,10 +96,10 @@
                                         </option>
                                     {% endfor %}
                                 {% else %}
-                                    {% for user in users %}
-                                        <option value="{{ user }}"
-                                                {% if user in task.assigned_to.all %}selected{% endif %}>
-                                            {{ user | title }}
+                                    {% for friend in friends.members.all %}
+                                        <option value="{{ friend }}"
+                                                {% if friend in task.assigned_to.all %}selected{% endif %}>
+                                            {{ friend | title }}
                                         </option>
                                     {% endfor %}
                                 {% endif %}

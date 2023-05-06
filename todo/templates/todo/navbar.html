@@ -40,6 +40,37 @@
         </div>
     </div>
 
+    <div class="navbar-item">
+        {% comment %} {% if friends_name.friends.id != 1 %}
+        <a href="{% url 'access:create_friends' %}" class="navbar-item">Friends</a>
+        {% elif friends_name.friends.id == 1 %} {% endcomment %}
+        <a href="{% url 'access:friends_detail' request.user.id %}" class="navbar-item">Friends</a>
+        {% comment %} {% endif %} {% endcomment %}
+        <div
+                id="navbarBurger"
+                class="navbar-burger burger"
+                data-target="burgerMenu"
+        >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </div>       
+   </div>
+
+   <div class="navbar-item">
+        {% comment %} <a href="{% url 'edit_profile_page' user.profile.id %}" class="navbar-item">Profile</a> {% endcomment %}
+        <a href="{% url 'show_profile_page' user.profile.id %}" class="navbar-item">Profile</a>
+        <div
+                id="navbarBurger"
+                class="navbar-burger burger"
+                data-target="burgerMenu"
+        >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </div>       
+    </div>
+
     <div class="navbar-menu" id="burgerMenu">
         <div class="navbar-end">
             <a href="{% url 'access:logout' %}" class="navbar-item">

@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'todo',
     'access',
+    'depiction',
     'navigation',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -122,6 +123,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+#Managing media
+MEDIA_ROOT = BASE_DIR / 'base/media'
+MEDIA_URL = '/media/'
 # Manual STATIC add
 # STATICFILES_DIRS = [
 #     # BASE_DIR / "static",
