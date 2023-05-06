@@ -27,10 +27,10 @@
                 {% endif %}
             </td>
             <td>
-                {% if task.created_by == request.user %}
+                {% if task.created_by == request.user or task.team == null %}
                     <a href="{% url 'tasks:not_complete_archive' task.id %}"
                        class="button is-small is-outlined is-warning">
-                        UnArchive
+                        Restore
                     </a>
                 {% endif %}
             </td>

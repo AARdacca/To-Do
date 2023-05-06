@@ -184,11 +184,12 @@ def complete_archive(request, task_id):
         return redirect('access:home')
 
     if task:
+        # if request.user == task.created_by or request.user in task.assigned_to.all():
         if request.user == task.created_by:
             task.complete_archive = 'True'
             task.save()
         else:
-            messages.error(request, "Only task creator can delete task.")
+            messages.error(request, "Only task creator can archive task.")
     else:
         messages.error(request, "Task doesn't exist")
 
@@ -204,11 +205,12 @@ def not_complete_archive(request, task_id):
         return redirect('access:home')
 
     if task:
+        # if request.user == task.created_by or request.user in task.assigned_to.all():
         if request.user == task.created_by:
             task.complete_archive = 'False'
             task.save()
         else:
-            messages.error(request, "Only task creator can delete task.")
+            messages.error(request, "Only task creator can restore task.")
     else:
         messages.error(request, "Task doesn't exist")
 
