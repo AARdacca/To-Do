@@ -161,7 +161,7 @@ def complete_archive_all(request):
 def create_friends(request):
     if request.method == "POST":
         members_list = [] # ['Raiyan',]
-        friends_name = "My Friends"
+        friends_name = str(request.user)+"'s Friends"
 
         friends = Friends.objects.create(
             friends_name=friends_name, created_by=request.user)

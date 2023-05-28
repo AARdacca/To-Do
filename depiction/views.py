@@ -13,19 +13,21 @@ from .forms import *
 class EditProfilePageView(generic.UpdateView):
     model = Profile
     form_class=EditProfileNewForm
-    template_name='base/edit_profile_page.html'
-    success_url=reverse_lazy('access:home')
+    template_name='depiction/edit_profile_page.html'
+    def get_success_url(self):
+        return reverse_lazy('depiction:show_profile_page', args=[self.request.user.id])
+    # success_url=reverse_lazy('depiction:show_profile_page', args=request.user.id)
 
 class PasswordsChangeView(PasswordChangeView):
     form_class= PasswordChangingForm
-    success_url= reverse_lazy('password_success')
+    success_url= reverse_lazy('depiction:password_success')
 
 def password_success(request):
-    return render(request, 'base/password_success.html', {})
+    return render(request, 'depiction/password_success.html', {})
 
 class ShowProfilePageView(DetailView):
     model = Profile
-    template_name = 'base/my_profile.html'
+    template_name = 'depiction/my_profile.html'
 
     def get_context_data(self,*args,**kwargs):
         context=super(ShowProfilePageView,self).get_context_data(*args,**kwargs)

@@ -59,7 +59,7 @@
 
    <div class="navbar-item">
         {% comment %} <a href="{% url 'edit_profile_page' user.profile.id %}" class="navbar-item">Profile</a> {% endcomment %}
-        <a href="{% url 'show_profile_page' user.profile.id %}" class="navbar-item">Profile</a>
+        <a href="{% url 'depiction:show_profile_page' user.profile.id %}" class="navbar-item">Profile</a>
         <div
                 id="navbarBurger"
                 class="navbar-burger burger"
