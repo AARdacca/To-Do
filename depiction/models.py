@@ -14,12 +14,13 @@ class Profile(models.Model):
     user=models.OneToOneField(User,null=True,on_delete=models.CASCADE)
     # user_profile_id=models.IntegerField(null=True)
     description = models.TextField(blank=True, null=True)
-    name = models.TextField(blank=True, null=True)
+    first_name = models.TextField(blank=True, null=True)
+    last_name = models.TextField(blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     phone_number = models.TextField(blank=True, null=True)
     username = models.TextField(blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
-    profileimg = models.ImageField(upload_to='profile_images', default='blank-profile-picture.png')
+    profile_image = models.ImageField(upload_to='profile_images', default='blank-profile-picture.png')
 
     def __str__(self):
         return(str(self.user)) 

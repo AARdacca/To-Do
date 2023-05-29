@@ -6,11 +6,12 @@ from django.contrib.auth.models import User
 class EditProfileNewForm(forms.ModelForm):
      class Meta:
        model=Profile
-       fields = ('username','name','email','phone_number','description','date_of_birth','profileimg')
+       fields = ('username','first_name','last_name','email','phone_number','description','date_of_birth','profile_image')
 
        widgets={
             'username':forms.TextInput(attrs={'class':'form-control'}),
-            'name':forms.TextInput(attrs={'class':'form-control'}),
+            'first_name':forms.TextInput(attrs={'class':'form-control'}),
+            'last_name':forms.TextInput(attrs={'class':'form-control'}),
             'email':forms.EmailInput(attrs={'class':'form-control'}),
             'phone_number':forms.TextInput(attrs={'class':'form-control'}),
             'description':forms.Textarea(attrs={'class':'form-control'}),

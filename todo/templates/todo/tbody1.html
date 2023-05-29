@@ -27,7 +27,7 @@
                 {% endif %}
             </td>
             <td>
-                {% if task.created_by == request.user or task.team == null %}
+                {% if task.created_by == request.user and task.team == null %}
                     <a href="{% url 'tasks:complete_archive' task.id %}"
                        class="button is-small is-outlined is-success">
                         Archive
@@ -37,4 +37,4 @@
         </tr>
         {% endif %}
     {% endfor %}
-    </tbody>
+</tbody>

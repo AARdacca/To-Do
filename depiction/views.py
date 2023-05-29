@@ -15,7 +15,19 @@ class EditProfilePageView(generic.UpdateView):
     form_class=EditProfileNewForm
     template_name='depiction/edit_profile_page.html'
     def get_success_url(self):
-        return reverse_lazy('depiction:show_profile_page', args=[self.request.user.id])
+        user_id=self.request.user.id
+        user = User.objects.get(pk=user_id)
+        email = self.request.POST.get('email')
+        first_name = self.request.POST.get('first_name')
+        last_name = self.request.POST.get('last_name')
+        email = email.strip()
+        if email != "":
+            user.email = email
+            user.save()
+        user.first_name=first_name
+        user.last_name=last_name
+        user.save()
+        return reverse_lazy('depiction:show_profile_page', args=[user_id])
     # success_url=reverse_lazy('depiction:show_profile_page', args=request.user.id)
 
 class PasswordsChangeView(PasswordChangeView):
