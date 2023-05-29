@@ -12,9 +12,10 @@
 
 {% block content %}
 
-{% include "depict_comp\navbar.html" %}
-
 <div class="container" style="margin-top:20px;">
+
+    {% include "depict_comp\navbar.html" %}
+
     <div class="row m-b-r m-t-3"  style="margin-top:40px;">
         <div class="col-md-2 offset-md-1">
             <img src="{{ page_user.profile_image.url }}" alt="profile_image" class="img-circle rounded-circle img-fluid" style="height: 180px; width: 180px;">
@@ -57,14 +58,65 @@
         {% endfor %}
     </div> {% endcomment %}
 
-        <button class="btn btn-primary btn-block" style="width:200px;position: relative;left:25%;
+        {% comment %}⬇️ Used previously ⬇️{% endcomment %}
+        {% comment %} <button class="btn btn-primary btn-block" style="width:200px;position: relative;left:25%;
             background: linear-gradient(to right,#623dc6 ,#9a35dd );">
             <a href="{% url 'depiction:edit_profile_page' user.profile.id %}">Edit Profile</a>
         </button>
         <button class="btn btn-primary btn-block" style="width:200px;position: relative;left:45%;
             background: linear-gradient(to right,#623dc6 ,#9a35dd );">
             <a href="{% url 'depiction:password' %}">Change Password</a>
-        </button>
+        </button> {% endcomment %}
+        {% comment %}⬆️ Used previously ⬆️{% endcomment %}
+
+
+        <div class="container">
+            <div class="row align-items-start">
+
+              <div class="col d-flex align-items-center justify-content-center">
+                    <input 
+                        class="btn btn-primary btn-block" 
+                        type="button" 
+                        value="Edit Profile" 
+                        onclick="window.location.href='{% url 'depiction:edit_profile_page' user.profile.id %}'"
+                        style="
+                            background: linear-gradient(to right,#623dc6 ,#9a35dd );
+                            text-align:center;
+                    ">
+              </div>
+
+              <div class="col d-flex align-items-center justify-content-center"> 
+                    <input 
+                        class="btn btn-primary btn-block" 
+                        type="button" 
+                        value="Change Password" 
+                        onclick="window.location.href='{% url 'depiction:password' %}'"
+                        style="
+                            background: linear-gradient(to right,#623dc6 ,#9a35dd );
+                            text-align:center;
+                    ">
+              </div>
+              
+            </div>
+        </div>
+
+    <hr class="border border-1 border-success">
+
+
+    
+
+</div>
+
+<div class="container shadow p-3 mb-5 bg-body rounded" style="width: 50%;margin-top: 30px;">
+
+    <br>
+    {% if page_user.first_name != "" and page_user.last_name != "" %}
+    <h4-responsive>Full name: {{page_user.first_name}} {{page_user.last_name}}</h4><br>
+    {% endif %}
+    {% if page_user.email != "" %}
+    <h4-responsive>Email: {{page_user.email}}</h4><br>
+    {% endif %}
+    <h4></h4><br>
 
 </div>
 

@@ -4,60 +4,61 @@
 
 {% block content %}
 
-{% include "depict_comp\navbar.html" %}
-
 {% if user.is_authenticated %}
 <!-- {%  if user.id == profile.user.id  %} -->
-
+    <div class="container" style="margin-top:20px;">
+        {% include "depict_comp\navbar.html" %}
+    </div>   
     <div class="container shadow p-3 mb-5 bg-body rounded" style="width: 50%;margin-top: 30px;">
+
         <h1 style="text-align:center; margin-top:10px; color:#9a35dd;font-weight: bolder;">Edit Profile Page</h1>
-    <div class="form-group" style="font-weight: 600;line-height: 2.5;">
+        <div class="form-group" style="font-weight: 600;line-height: 2.5;">
         
     
-    <br/>
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            {% comment %} {{ form.username }}
-            {{ form.name }}
-            {{ form.email }}
-            {{ form.phone_number }}
-            {{ form.description }}
-            {{ form.profile_image }}
-            <br> {% endcomment %}
-            <br>
-            <div class="container">
-                <div class="row align-items-start">
+            <br/>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% comment %} {{ form.username }}
+                {{ form.name }}
+                {{ form.email }}
+                {{ form.phone_number }}
+                {{ form.description }}
+                {{ form.profile_image }}
+                <br> {% endcomment %}
+                <br>
+                <div class="container">
+                    <div class="row align-items-start">
 
-                  <div class="col d-flex align-items-center justify-content-center">
-                    <button 
-                        class="btn btn-primary btn-block" 
-                        style="
-                                background: linear-gradient(to right,#623dc6 ,#9a35dd );
-                                text-align:center;
-                            ">
-                        Update Profile Page
-                    </button>
-                  </div>
-
-                  <div class="col d-flex align-items-center justify-content-center"> 
-                        <input 
+                    <div class="col d-flex align-items-center justify-content-center">
+                        <button 
                             class="btn btn-primary btn-block" 
-                            type="button" 
-                            value=" Back " 
-                            onclick="history.back()"
                             style="
-                                background: linear-gradient(to right,#623dc6 ,#9a35dd );
-                                text-align:center;
-                        ">
-                  </div>
-                  
+                                    background: linear-gradient(to right,#623dc6 ,#9a35dd );
+                                    text-align:center;
+                                ">
+                            Update Profile Page
+                        </button>
+                    </div>
+
+                    <div class="col d-flex align-items-center justify-content-center"> 
+                            <input 
+                                class="btn btn-primary btn-block" 
+                                type="button" 
+                                value=" Back " 
+                                onclick="history.back()"
+                                style="
+                                    background: linear-gradient(to right,#623dc6 ,#9a35dd );
+                                    text-align:center;
+                            ">
+                    </div>
+                    
+                    </div>
                 </div>
-            </div>
-            {% comment %} <button class="btn btn-primary btn-block" style="width:200px;position: relative;left:35%;
-            background: linear-gradient(to right,#623dc6 ,#9a35dd );">Update Profile Page</button> {% endcomment %}
-        </form>
-    </div>
+                {% comment %} <button class="btn btn-primary btn-block" style="width:200px;position: relative;left:35%;
+                background: linear-gradient(to right,#623dc6 ,#9a35dd );">Update Profile Page</button> {% endcomment %}
+            </form>
+        </div>
     </div>
     <br/><br/>
 
