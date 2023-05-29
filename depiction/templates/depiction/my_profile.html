@@ -110,11 +110,15 @@
 <div class="container shadow p-3 mb-5 bg-body rounded" style="width: 50%;margin-top: 30px;">
 
     <br>
+    
+    {% if page_user.first_name != null and page_user.last_name != null %}
     {% if page_user.first_name != "" and page_user.last_name != "" %}
-    <h4-responsive>Full name: {{page_user.first_name}} {{page_user.last_name}}</h4><br>
+    <h6>Full name: {{page_user.first_name}} {{page_user.last_name}}</h6><br>
     {% endif %}
-    {% if page_user.email != "" %}
-    <h4-responsive>Email: {{page_user.email}}</h4><br>
+    {% endif %}
+
+    {% if page_user.email != null and page_user.email != "" %}
+    <h6>Email: {{page_user.email}}</h6><br>
     {% endif %}
     <h4></h4><br>
 
