@@ -132,6 +132,12 @@ MEDIA_URL = '/media/'
 #     BASE_DIR / "base/static/",
 # ]
 
+# email configs
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_HOST_USER = 'b9aee2b39adb36'
+EMAIL_HOST_PASSWORD = '812dfb8ac2c047'
+EMAIL_PORT = '2525'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
