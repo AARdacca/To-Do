@@ -1,0 +1,132 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #fff;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.logo {
+    color: #1565c0;
+    font-size: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-decoration: none;
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+}
+
+.navigation a {
+    color: #1565c0;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 15px;
+    transition: color 0.3s;
+}
+
+.navigation a:hover {
+    color: #1976d2;
+}
+
+.content {
+    text-align: center;
+    max-width: 650px;
+}
+
+.info h2 {
+    margin-bottom: 30px;
+}
+
+.info p {
+    margin-bottom: 40px;
+}
+
+.info-btn {
+    color: #fff;
+    background-color: var(--primary-color, #1565c0);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.info-btn:hover {
+    background-color: #1976d2;
+}
+
+.media-icons a {
+    color: #1565c0;
+    font-size: 25px;
+    margin-right: 20px;
+    transition: transform 0.3s;
+}
+
+.media-icons a:hover {
+    transform: scale(1.2);
+}
+
+footer {
+    background-color: #1565c0;
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+
+.footer-text {
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.theme-colors {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.theme-color {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.theme-color.blue {
+    background-color: #1565c0;
+}
+
+.theme-color.turquoise {
+    background-color: #00bcd4;
+}
+
+.theme-color.gold {
+    background-color: #ffc107;
+}

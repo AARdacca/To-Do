@@ -1,28 +1,89 @@
-{% extends 'templates\base\base.html' %}
+{% load static %}
+<!DOCTYPE html>
+        
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/x-icon" href="{% static 'logo/logo.png' %}">
+	<title>About Us</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'navigation\about.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'navigation\neon.css' %}">
+
+
+	<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+  	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+	
+	{% if user.is_authenticated %}
+	{% include "depict_comp\navbar.html" %}
+	{% else %}
+	{% include "about\navbar.html" %}
+	{% endif %}
+
+	<section class="team">
+		<div class="center">
+           
+			<h1>About Us</h1> 
 
 
 
-{% block title %}
-About
-{% endblock title %}
+		<div class="team-content">
+			<div class="box">
+				<img src="{% static "img/02.jpg" %}" alt="">
+				<h3>Md. Nahiyan Uddin</h3>
+				<h5>Lecturer</h5>
+				<h5>University of Asia Pacific</h5>
+				<div class="icons">
+					<a href="#"><i class="ri-twitter-fill"></i></a>
+					<a href="https://www.facebook.com/nahiyan.uddin"><i class="ri-facebook-box-fill"></i></a>
+					<a href="https://www.linkedin.com/in/md-nahiyan-uddin-3a913b138/"><i class="ri-instagram-fill"></i></a>
+				</div>
+			</div>
 
+			<div class="box">
+				<img src="{% static "img/03.jpg" %}" alt="">
+				<h3>Ali Ahasan Raiyan</h3>
+				<h5>Student</h5>
+				<h5>University of Asia Pacific</h5>
+				<div class="icons">
+					<a href="https://twitter.com/AliAhasanRaiyan"><i class="ri-twitter-fill"></i></a>
+					<a href="https://www.facebook.com/aliahasan.dhaka/"><i class="ri-facebook-box-fill"></i></a>
+					<a href="https://www.instagram.com/aliahasanraiyan/"><i class="ri-instagram-fill"></i></a>
+				</div>
+			</div>
 
-{% block nav_list %}
-<li class="nav-item">
-    <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
-</li>
-<li class="nav-item">
-    <a class="nav-link" aria-current="page" href="{% url 'todo' %}">To-Do</a>
-</li>
-<li class="nav-item">
-    <a class="nav-link" aria-current="page" href="{% url 'about' %}"><u>About</u></a>
-</li>
-<li class="nav-item">
-    <a class="nav-link" href="{% url 'logout' %}">Log out</a>
-</li>
-{% endblock nav_list %}
+			<div class="box">
+				<img src="{% static "img/01.png" %}" alt="">
+				<h3>Ferdous Hasan</h3>
+				<h5>Student</h5>
+				<h5>University of Asia Pacific</h5>
+				<div class="icons">
+					<a href="#"><i class="ri-twitter-fill"></i></a>
+					<a href="#"><i class="ri-facebook-box-fill"></i></a>
+					<a href="#"><i class="ri-instagram-fill"></i></a>
+				</div>
+			</div>
 
- 
-{% block content %}
-This is About Page
-{% endblock content %}
+			<div class="box">
+				<img src="{% static "img/04.png" %}" alt="">
+				<h3>Alifia Afnan </h3>
+				<h5>Student</h5>
+				<h5>University of Asia Pacific</h5>
+				<div class="icons">
+					<a href="#"><i class="ri-twitter-fill"></i></a>
+					<a href="https://www.facebook.com/people/Alifia-Afnan/"><i class="ri-facebook-box-fill"></i></a>
+					<a href="#"><i class="ri-instagram-fill"></i></a>
+				</div>
+			</div>
+
+		</div>
+	</section>
+
+</body>
+</html>

@@ -71,6 +71,40 @@
         </div>       
     </div>
 
+    <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More
+        </a>
+
+        <div class="navbar-dropdown">
+          <a href="{% url 'navigation:home' %}" class="navbar-item">
+            Home
+          </a>
+          <hr class="navbar-divider">
+          <a href="{% url 'navigation:about' %}" class="navbar-item">
+            About
+          {% comment %} </a>
+          <a class="navbar-item">
+            Contact
+          </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item">
+            Report an issue
+          </a> {% endcomment %}
+        </div>
+
+        <div
+                id="navbarBurger"
+                class="navbar-burger burger"
+                data-target="burgerMenu"
+        >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </div> 
+
+    </div>
+
     <div class="navbar-menu" id="burgerMenu">
         <div class="navbar-end">
             <a href="{% url 'access:logout' %}" class="navbar-item">
@@ -80,6 +114,8 @@
     </div>
     
 </nav>
+
+{% include "nav_music_player\nav_music_player.html" %}
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {

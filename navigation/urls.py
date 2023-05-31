@@ -18,7 +18,11 @@ from django.urls import path
 from navigation import views
 from navigation.views import *
 
+app_name = "navigation"
+
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('', views.index, name="index"),
+    path('about/',views.about,name='about'),
+    path('home/',views.home,name='home'),
 ]

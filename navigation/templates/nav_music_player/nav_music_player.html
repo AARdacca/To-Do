@@ -1,0 +1,82 @@
+{% load static %}
+
+<div class="right-col">
+    <input type="file" accept=".mp3" id="fileInput" style="display: none;">
+    <p>Music</p>
+    <img src="{% static 'nav_music_player/play.png' %}" id="icon">
+    <button id="chooseFileBtn"><h6>📂</h6></button>
+</div>
+
+<audio id="mySong">
+    <source src="{% static 'nav_music_player/music.mp3' %}" type="audio/mp3">
+</audio>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
+
+    .right-col {
+        display: flex;
+        margin: 0;
+        padding: 0;
+        justify-content: right;
+        align-items: right;
+        margin-right: 0%;
+        margin-top: 0px;
+    }
+
+    .right-col p {
+        font-family: 'Berkshire Swash', cursive;
+        font-size: 14px;
+        color: #000000;
+        margin: 0;
+        padding: 0;
+        font-weight: 400;
+        margin-top: 10px;
+        margin-right: 0px;
+    }
+
+    .right-col h6 {
+        font-size: 14px;
+        line-height: 0px;
+        color: #000000;
+        font-weight: 0;
+        margin: 0;
+        padding: 0;
+        margin-top: 0px;
+        margin-right: 0px;
+    }
+
+    #icon {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    var mySong = document.getElementById("mySong");
+    var icon = document.getElementById("icon");
+    var fileInput = document.getElementById("fileInput");
+    var chooseFileBtn = document.getElementById("chooseFileBtn");
+
+    chooseFileBtn.addEventListener("click", function() {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener("change", function(event) {
+        var file = event.target.files[0];
+        if (file) {
+            mySong.src = URL.createObjectURL(file);
+        }
+    });
+
+    icon.onclick = function() {
+        if (mySong.paused) {
+            mySong.play();
+            icon.src = "{% static 'nav_music_player/pause.png' %}";
+        } else {
+            mySong.pause();
+            icon.src = "{% static 'nav_music_player/play.png' %}";
+        }
+    }
+</script>
